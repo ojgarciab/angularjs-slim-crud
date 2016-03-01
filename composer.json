@@ -16,6 +16,7 @@
     "phpunit/phpunit": "4.0.*"
   },
   "autoload": {
-    "psr-4": {"ASC\\": "src"}
+    "psr-4": {
+      "ASC\\": "src/"}
   }
 }
