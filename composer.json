@@ -1,0 +1,21 @@
+{
+  "name": "ojgarciab/angularjs-slim-crud",
+  "description": "Simple Angular.js and Slim framework based CRUD",
+  "license": "GPL-3.0",
+  "keywords": ["crud", "angular.js", "slim"],
+  "authors": [
+    {
+      "name": "Oscar Garcia",
+      "email": "oscar.github@linaresdigital.com"
+    }
+  ],
+  "require": {
+    "slim/slim": "^3.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.0.*"
+  },
+  "autoload": {
+    "psr-4": {"ASC\\": "src"}
+  }
+}
