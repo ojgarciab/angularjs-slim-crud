@@ -1,0 +1,20 @@
+<h2>Usuarios</h2>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="usuario in usuarios">
+      <td>{{usuario.usuario}}</td>
+      <td>{{usuario.nombre}}</td>
+      <td>{{usuario.apellidos}}</td>
+      <td><a href="#/editar/{{usuario.id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></button></td>
+    </tr>
+  </tbody>
+</table>
+<a class="btn btn-primary" href="#/agregar">Agregar nuevo usuario</a>
