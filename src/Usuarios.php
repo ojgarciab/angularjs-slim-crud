@@ -12,20 +12,48 @@ class Usuarios {
     // TODO: Crear usuario nuevo con los datos enviados en el formulario
   }
 
-  public function readUsuarios() {
+  static public function readUsuarios($peticion, $respuesta) {
+    $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
+    $body = $respuesta->getBody();
+    $body->write(json_encode([
+      [
+        'id' => 1,
+        'usuario' => 'redstar',
+        'nombre' => 'Oscar',
+        'apellidos' => 'Garcia',
+      ],
+      [
+        'id' => 2,
+        'usuario' => 'foobar',
+        'nombre' => 'Foo',
+        'apellidos' => 'Bar',
+      ],
+    ]));
     // TODO: Obtener listado de usuarios
+    return $respuesta;
   }
 
-  public function readUsuario($id) {
+  static public function readUsuario($peticion, $respuesta, $argumentos) {
+    $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
+    $body = $respuesta->getBody();
+    $body->write(json_encode([
+      'id' => 1,
+      'usuario' => 'redstar',
+      'nombre' => 'Oscar',
+      'apellidos' => 'Garcia',
+    ]));
     // TODO: Obtener un usuario por su identificador
+    return $respuesta;
   }
 
-  public function updateUsuario($id) {
+  static public function updateUsuario($id) {
     // TODO: Actualizar un usuario por su identificador usando los datos enviados en el formulario
   }
 
-  public function deleteUsuario($id) {
+  static public function deleteUsuario($peticion, $respuesta, $argumentos) {
+    $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
     // TODO: Borrar un usuario por su identificador
+    return $respuesta;
   }
 
   private function obtenerConexion() {
@@ -35,4 +63,3 @@ class Usuarios {
     // TODO: Establecer conexión a la base de datos
   }
 }
-

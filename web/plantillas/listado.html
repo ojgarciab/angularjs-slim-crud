@@ -1,20 +1,24 @@
-<h2>Usuarios</h2>
-<table class="table table-condensed">
+<div style="float: right;"><i class="glyphicon glyphicon-search"></i> <input ng-model="busqueda"></div>
+<h2><a class="btn btn-warning" href="#/cargar"><i class="glyphicon glyphicon-repeat"></i></a> Usuarios</h2>
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Usuario</th>
-      <th>Nombre</th>
-      <th>Apellidos</th>
-      <th></th>
+      <th class="col-xs-2"><button class="btn btn-default" ng-click="ordenar('usuario')">Usuario <span class="ordenar" ng-show="columna == 'usuario'" ng-class="{invertir:orden}"></span></button></th>
+      <th class="col-xs-4"><button class="btn btn-default" ng-click="ordenar('nombre')">Nombre <span class="ordenar" ng-show="columna == 'nombre'" ng-class="{invertir:orden}"></span></th>
+      <th class="col-xs-4"><button class="btn btn-default" ng-click="ordenar('apellidos')">Apellidos <span class="ordenar" ng-show="columna == 'apellidos'" ng-class="{invertir:orden}"></span></th>
+      <th class="col-xs-1"></th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="usuario in usuarios">
+    <tr ng-repeat="usuario in usuarios | filter:busqueda | orderBy:columna:orden">
       <td>{{usuario.usuario}}</td>
       <td>{{usuario.nombre}}</td>
       <td>{{usuario.apellidos}}</td>
-      <td><a href="#/editar/{{usuario.id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></button></td>
+      <td>
+        <a href="#/editar/{{usuario.id}}" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
+        <button class="btn btn-danger btn-sm" ng-click="borrar(usuario)"><i class="glyphicon glyphicon-remove"></i></button>
+      </td>
     </tr>
   </tbody>
 </table>
-<a class="btn btn-primary" href="#/agregar">Agregar nuevo usuario</a>
+<a class="btn btn-primary" href="#/agregar"><i class="glyphicon glyphicon-plus"></i> Agregar nuevo usuario</a>

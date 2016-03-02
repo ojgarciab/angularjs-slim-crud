@@ -1,0 +1,9 @@
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #f2f2f2;
+}
+.ordenar:after {
+  content: '\25b2';
+}
+.ordenar.invertir:after {
+  content: '\25bc';
+}
