@@ -57,7 +57,7 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
 function borrarUsuario($scope, $http, $location, usuario) {
   console.log(usuario);
 
-  var deleteUser = confirm('Are you absolutely sure you want to delete?');
+  var deleteUser = confirm('¿Estás seguro de querer borrar el usuario?');
   if (deleteUser) {
     $http.delete('usuarios/' + usuario.id);
     $location.path('/');

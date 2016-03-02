@@ -28,6 +28,30 @@ class Usuarios {
         'nombre' => 'Foo',
         'apellidos' => 'Bar',
       ],
+      [
+        'id' => 3,
+        'usuario' => 'redstar3',
+        'nombre' => 'Oscar',
+        'apellidos' => 'Garcia',
+      ],
+      [
+        'id' => 4,
+        'usuario' => 'foobar3',
+        'nombre' => 'Foo',
+        'apellidos' => 'Bar',
+      ],
+      [
+        'id' => 5,
+        'usuario' => 'redstar7',
+        'nombre' => 'Oscar',
+        'apellidos' => 'Garcia',
+      ],
+      [
+        'id' => 6,
+        'usuario' => 'foobar5',
+        'nombre' => 'Foo',
+        'apellidos' => 'Bar',
+      ],
     ]));
     // TODO: Obtener listado de usuarios
     return $respuesta;
