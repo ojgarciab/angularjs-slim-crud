@@ -1,0 +1,11 @@
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `usuario`, `nombre`, `apellidos`) VALUES
+(1, 'Lionel', 'Marcos', 'Lionel Alfaro'),
+(2, 'Ferrer', 'Ibarra', 'Leonora Ferrer'),
+(3, 'Atlántico', 'Valladares', 'Ecio Lozano'),
+(4, 'Castellano', 'Mailin', 'Carrero Cisneros'),
+(5, 'Michael', 'Miguel', 'Verduzco Martínez'),
+(6, 'Yunquera', 'Platón', 'Domínquez Méndez');

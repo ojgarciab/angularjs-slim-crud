@@ -1,0 +1,12 @@
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(20) NOT NULL,
+  `nombre` varchar(40) NOT NULL,
+  `apellidos` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `usuario` (`usuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
