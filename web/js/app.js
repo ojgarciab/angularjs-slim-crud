@@ -13,8 +13,12 @@ angular.module('SlimCrudApp', []).
 function ControladorListado($scope, $http, $location) {
   /* Carga de datos en el controlador */
   $scope.cargar = function() {
-    $http.get('usuarios').success(function(usuarios) {
-      $scope.usuarios = usuarios;
+    $http.get('usuarios').success(function(datos) {
+      if (datos.error == true) {
+        Popup.mostrar(datos.mensaje, 'danger');
+      } else {
+        $scope.usuarios = datos.usuarios;
+      }
     });
   };
   /* Control interno para borrar un usuario */
@@ -36,9 +40,12 @@ function ControladorListado($scope, $http, $location) {
 /* Controlador para el listado de usuarios */
 function ControladorEditar($scope, $http, $location, $routeParams) {
   var id = $routeParams.id;
-  $scope.activePath = null;
-  $http.get('usuarios/' + id).success(function(usuario) {
-    $scope.usuario = usuario;
+  $http.get('usuarios/' + id).success(function(datos) {
+    if (datos.error == true) {
+      Popup.mostrar(datos.mensaje, 'danger');
+    } else {
+      $scope.usuario = datos.usuario;
+    }
   });
   /* Control para borrar un usuario */
   $scope.borrar = function(id) {
@@ -70,3 +77,23 @@ function actualizarUsuario($scope, $http, $location, usuario, id){
     $scope.activePath = $location.path('/');
   });
 }
+
+/***************** POPUP *****************/
+var Popup = (function() {
+    "use strict";
+    var elemento,
+        que = {};
+    que.configurar = function(opciones) {
+        elemento = $(opciones.selector);
+    };
+    que.mostrar = function(texto, clase) {
+        elemento.find("span").html(texto);
+        elemento.attr('class', "alert alert-" + clase);
+        elemento.delay(200).fadeIn().delay(4000).fadeOut();
+    };
+    return que;
+}());
+
+Popup.configurar({
+  "selector": "#alertas"
+});

@@ -2,8 +2,6 @@
 require '../vendor/autoload.php';
 
 $app = new \Slim\App();
-$usuarios = new \ASC\Usuarios();
-$usuarios->createUsuario();
 
 /* Rutas a los servicios RESTful */
 $app->get('/usuarios', '\ASC\Usuarios::readUsuarios');

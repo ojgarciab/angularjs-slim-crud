@@ -18,6 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "ASC\\": "src/"}
+      "ASC\\": "src/",
+      "miPDO\\": "src/"
+    }
   }
 }

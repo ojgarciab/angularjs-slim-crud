@@ -8,16 +8,18 @@
       <input class="form-control" type="text" ng-model="usuario.usuario" value="{{usuario.usuario}}" required />
     </div>
     <div class="form-group">
-      <label for="nombre">First name:</label>
+      <label for="nombre">Nombre:</label>
       <input class="form-control" type="text" ng-model="usuario.nombre" value="{{usuario.nombre}}" required />
     </div>
     <div class="form-group">
-      <label for="apellidos">Last name:</label>
+      <label for="apellidos">Apellidos:</label>
       <input class="form-control" type="text" ng-model="usuario.apellidos" value="{{usuario.apellidos}}" required />
     </div>
-    <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(usuario)" id="add-new-btn" ng-click="actualizar(usuario)">Actualizar <span class="glyphicon glyphicon-floppy-disk"></span></button>
-    <button class="btn btn-danger" ng-click="borrar(usuario)">Borrar <span class="glyphicon glyphicon-trash"></span></button>
-    <a href="#/" class="btn">Cancelar</a>
+    <div style="float: right;">
+      <button class="btn btn-danger" ng-click="borrar(usuario)"><i class="glyphicon glyphicon-trash"></i> Borrar</button>
+      <button class="btn btn-success" ng-disabled="AddNewForm.$invalid || isUnchanged(usuario)" id="add-new-btn" ng-click="actualizar(usuario)">
+        <i class="glyphicon glyphicon-floppy-disk"></i> Actualizar</button></div>
+    <a href="#/" class="btn btn-default"><i class="glyphicon glyphicon-backward"></i> Cancelar</a>
   </form>
 </div>
 </div>

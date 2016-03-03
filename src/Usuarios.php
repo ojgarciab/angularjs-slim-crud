@@ -15,45 +15,20 @@ class Usuarios {
   static public function readUsuarios($peticion, $respuesta) {
     $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
     $body = $respuesta->getBody();
-    $body->write(json_encode([
-      [
-        'id' => 1,
-        'usuario' => 'redstar',
-        'nombre' => 'Oscar',
-        'apellidos' => 'Garcia',
-      ],
-      [
-        'id' => 2,
-        'usuario' => 'foobar',
-        'nombre' => 'Foo',
-        'apellidos' => 'Bar',
-      ],
-      [
-        'id' => 3,
-        'usuario' => 'redstar3',
-        'nombre' => 'Oscar',
-        'apellidos' => 'Garcia',
-      ],
-      [
-        'id' => 4,
-        'usuario' => 'foobar3',
-        'nombre' => 'Foo',
-        'apellidos' => 'Bar',
-      ],
-      [
-        'id' => 5,
-        'usuario' => 'redstar7',
-        'nombre' => 'Oscar',
-        'apellidos' => 'Garcia',
-      ],
-      [
-        'id' => 6,
-        'usuario' => 'foobar5',
-        'nombre' => 'Foo',
-        'apellidos' => 'Bar',
-      ],
-    ]));
-    // TODO: Obtener listado de usuarios
+    try {
+      $conexion = \miPDO\Conexion::obtenerPDO();
+      var_dump($_conexion);
+      $resultado = $conexion->query('SELECT * FROM usuarios');
+      $body->write(json_encode([
+        'error' => false,
+        'usuarios' => $resultado->fetchAll(PDO::FETCH_OBJ),
+      ]));
+    } catch (\PDOException $e) {
+      $body->write(json_encode([
+        'error' => true,
+        'mensaje' => $e->getMessage(),
+      ]));
+    }
     return $respuesta;
   }
 
@@ -61,11 +36,13 @@ class Usuarios {
     $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
     $body = $respuesta->getBody();
     $body->write(json_encode([
+      'error' => false,
+      'usuario' => [
       'id' => 1,
       'usuario' => 'redstar',
       'nombre' => 'Oscar',
       'apellidos' => 'Garcia',
-    ]));
+    ]]));
     // TODO: Obtener un usuario por su identificador
     return $respuesta;
   }
@@ -81,9 +58,7 @@ class Usuarios {
   }
 
   private function obtenerConexion() {
-    if ($conexion !== false) {
-      return $conexion;
-    }
-    // TODO: Establecer conexión a la base de datos
+    //  Establecer conexión a la base de datos
+    return \PDO\Conexion::obtenerPDO();
   }
 }

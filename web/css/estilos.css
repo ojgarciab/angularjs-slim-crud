@@ -7,3 +7,9 @@
 .ordenar.invertir:after {
   content: '\25bc';
 }
+#alertas {
+  position: fixed;
+  top: 2em;
+  right: 2em;
+  z-index: 1000;
+}
