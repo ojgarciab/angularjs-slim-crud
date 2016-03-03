@@ -32,17 +32,24 @@ class Usuarios {
   }
 
   static public function readUsuario($peticion, $respuesta, $argumentos) {
+    // Obtener un usuario por su identificador
     $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
     $body = $respuesta->getBody();
-    $body->write(json_encode([
-      'error' => false,
-      'usuario' => [
-      'id' => 1,
-      'usuario' => 'redstar',
-      'nombre' => 'Oscar',
-      'apellidos' => 'Garcia',
-    ]]));
-    // TODO: Obtener un usuario por su identificador
+    try {
+      $conexion = \miPDO\Conexion::obtenerPDO();
+      $consulta = $conexion->prepare('SELECT * FROM usuarios WHERE id = :id');
+      $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
+      $consulta->execute();
+      $body->write(json_encode([
+        'error' => false,
+        'usuario' => $consulta->fetch(\PDO::FETCH_OBJ),
+      ]));
+    } catch (\PDOException $e) {
+      $body->write(json_encode([
+        'error' => true,
+        'mensaje' => $e->getMessage(),
+      ]));
+    }
     return $respuesta;
   }
 
