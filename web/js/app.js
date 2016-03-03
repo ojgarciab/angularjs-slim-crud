@@ -24,7 +24,12 @@ function ControladorListado($scope, $http, $location) {
   /* Control interno para borrar un usuario */
   $scope.borrar = function(usuario) {
     borrarUsuario($scope, $http, $location, usuario);
-    $scope.cargar();
+    /* Buscamos el elemento para borrarlo de la vista */
+    for (var actual in $scope.usuarios) {
+      if ($scope.usuarios[actual].id == usuario.id) {
+        $scope.usuarios.splice(actual, 1);
+      }
+    }
   };
   /* Función de ordenado de columnas */
   $scope.columna = 'usuario';

@@ -58,8 +58,24 @@ class Usuarios {
   }
 
   static public function deleteUsuario($peticion, $respuesta, $argumentos) {
+    // Borrar un usuario por su identificador
     $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
-    // TODO: Borrar un usuario por su identificador
+    $body = $respuesta->getBody();
+    try {
+      $conexion = \miPDO\Conexion::obtenerPDO();
+      $consulta = $conexion->prepare('DELETE FROM usuarios WHERE id = :id');
+      $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
+      $consulta->execute();
+      $body->write(json_encode([
+        'error' => false,
+        'borrados' => $consulta->rowCount(),
+      ]));
+    } catch (\PDOException $e) {
+      $body->write(json_encode([
+        'error' => true,
+        'mensaje' => $e->getMessage(),
+      ]));
+    }
     return $respuesta;
   }
 
