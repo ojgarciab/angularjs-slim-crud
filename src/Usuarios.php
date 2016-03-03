@@ -17,11 +17,10 @@ class Usuarios {
     $body = $respuesta->getBody();
     try {
       $conexion = \miPDO\Conexion::obtenerPDO();
-      var_dump($_conexion);
       $resultado = $conexion->query('SELECT * FROM usuarios');
       $body->write(json_encode([
         'error' => false,
-        'usuarios' => $resultado->fetchAll(PDO::FETCH_OBJ),
+        'usuarios' => $resultado->fetchAll(\PDO::FETCH_OBJ),
       ]));
     } catch (\PDOException $e) {
       $body->write(json_encode([
