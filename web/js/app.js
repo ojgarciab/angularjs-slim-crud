@@ -62,7 +62,9 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
     actualizarUsuario($scope, $http, $location, usuario, id);
   };
   $scope.aleatorio = function() {
-    //obtenerNombre($scope, )
+    $scope.usuario.nombre = generadorNombres.obtenerNombre();
+    $scope.usuario.apellidos = generadorNombres.obtenerApellido() + " " + generadorNombres.obtenerApellido();
+    $scope.usuario.usuario = $scope.usuario.nombre + " " + $scope.usuario.apellidos;
   }
 }
 
@@ -114,11 +116,68 @@ Popup.configurar({
 });
 
 /*************** NOMBRES Y APELLIDOS ***************/
-$.get('https://raw.githubusercontent.com/ojgarciab/Randomuser.me-Source/master/nats/ES/lists/male_first.txt')
-  .done(function(datos) {
+var generadorNombres = (function() {
+  var nombres = {
+    total: [],
+    informacion: 0
+  }, apellidos = {
+    total: [],
+    informacion: 0
+  }, exterior = {};
+  /* TODO: Por rendimiento debería ordenarse de mayor a menor frecuencia */
+  $.get('datos/nombres.txt')
+    .done(function(datos) {
+      nombres = tratar(datos);
+      console.log(nombres);
+    });
+  /* Ordenado de mayor a menor frecuencia */
+  $.get('datos/apellidos.txt')
+    .done(function(datos) {
+      apellidos = tratar(datos);
+      console.log(apellidos);
+    });
+  function tratar(datos) {
+    var informacion = [], acumulado = 0;
     datos = datos.split("\n");
     for (var dato in datos) {
-      datos[dato] = convertirNombre(datos[dato]);
+      var elemento = datos[dato].split("\t");
+      var numero = parseInt(elemento[1], 10);
+      acumulado += numero;
+      informacion.push({
+        texto: convertirNombre(elemento[0]),
+        numero: numero,
+        acumulado: acumulado,
+      });
     }
-    console.log(datos);
-  });
+    return {
+      total: acumulado,
+      informacion: informacion
+    };
+  }
+  exterior.obtenerNombre = function() {
+    if (nombres.total > 0) {
+      var umbral =  Math.floor(Math.random() * nombres.total);
+      var elegido = buscar(nombres.informacion, umbral);
+      return elegido;
+    } else {
+      return '?';
+    }
+  };
+  exterior.obtenerApellido = function() {
+    if (apellidos.total > 0) {
+      var umbral =  Math.floor(Math.random() * apellidos.total);
+      var elegido = buscar(apellidos.informacion, umbral);
+      return elegido;
+    } else {
+      return '?';
+    }
+  };
+  function buscar(datos, umbral) {
+    for (var dato in datos) {
+      if (umbral < datos[dato].acumulado) {
+        return datos[dato].texto;
+      }
+    }
+  }
+  return exterior;
+}());
