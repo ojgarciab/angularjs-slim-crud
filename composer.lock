@@ -272,16 +272,16 @@
         },
         {
             "name": "slim/slim",
-            "version": "3.2.1",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "53a4dd576dd3add4efd113ca77c3c21fa559b33e"
+                "reference": "939f2e85d57508de9cff241d10091cd972f221c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/53a4dd576dd3add4efd113ca77c3c21fa559b33e",
-                "reference": "53a4dd576dd3add4efd113ca77c3c21fa559b33e",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/939f2e85d57508de9cff241d10091cd972f221c3",
+                "reference": "939f2e85d57508de9cff241d10091cd972f221c3",
                 "shasum": ""
             },
             "require": {
@@ -335,7 +335,7 @@
                 "micro",
                 "router"
             ],
-            "time": "2016-02-29 21:39:18"
+            "time": "2016-03-10 21:37:40"
         }
     ],
     "packages-dev": [
