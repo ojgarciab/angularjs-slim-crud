@@ -10,12 +10,12 @@ class Usuarios
         return $bool;
     }
     
-    public function createUsuario()
+    public static function createUsuario()
     {
         // TODO: Crear usuario nuevo con los datos enviados en el formulario
     }
     
-    static public function readUsuarios(
+    public static function readUsuarios(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta
     ) {
@@ -46,7 +46,7 @@ class Usuarios
         return $respuesta;
     }
     
-    static public function readUsuario(
+    public static function readUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
@@ -80,7 +80,7 @@ class Usuarios
         return $respuesta;
     }
     
-    static public function updateUsuario(
+    public static function updateUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
@@ -88,7 +88,7 @@ class Usuarios
         // TODO: Actualizar un usuario por su identificador usando los datos enviados en el formulario
     }
     
-    static public function deleteUsuario(
+    public static function deleteUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
@@ -119,11 +119,5 @@ class Usuarios
             );
         }
         return $respuesta;
-    }
-    
-    private function obtenerConexion()
-    {
-        //  Establecer conexión a la base de datos
-        return \PDO\Conexion::obtenerPDO();
     }
 }
