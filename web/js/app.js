@@ -52,6 +52,7 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
       $scope.usuario = datos.usuario;
     }
   });
+  
   /* Control para borrar un usuario */
   $scope.borrar = function(id) {
     borrarUsuario($scope, $http, $location, id);
@@ -60,7 +61,9 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
   $scope.actualizar = function(usuario, id) {
     actualizarUsuario($scope, $http, $location, usuario, id);
   };
-
+  $scope.aleatorio = function() {
+    //obtenerNombre($scope, )
+  }
 }
 
 /************ UTILIDADES ************/
@@ -83,6 +86,13 @@ function actualizarUsuario($scope, $http, $location, usuario, id){
   });
 }
 
+/* Función para generar palabras capitales */
+function convertirNombre(nombre) {
+    return nombre.replace(/\w\S*/g, function(palabra) {
+      return palabra.charAt(0).toUpperCase() + palabra.substr(1).toLowerCase();
+    });
+}
+
 /***************** POPUP *****************/
 var Popup = (function() {
     "use strict";
@@ -102,3 +112,13 @@ var Popup = (function() {
 Popup.configurar({
   "selector": "#alertas"
 });
+
+/*************** NOMBRES Y APELLIDOS ***************/
+$.get('https://raw.githubusercontent.com/ojgarciab/Randomuser.me-Source/master/nats/ES/lists/male_first.txt')
+  .done(function(datos) {
+    datos = datos.split("\n");
+    for (var dato in datos) {
+      datos[dato] = convertirNombre(datos[dato]);
+    }
+    console.log(datos);
+  });
