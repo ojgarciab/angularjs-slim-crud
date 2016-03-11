@@ -52,6 +52,7 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
       $scope.usuario = datos.usuario;
     }
   });
+  
   /* Control para borrar un usuario */
   $scope.borrar = function(id) {
     borrarUsuario($scope, $http, $location, id);
@@ -60,7 +61,11 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
   $scope.actualizar = function(usuario, id) {
     actualizarUsuario($scope, $http, $location, usuario, id);
   };
-
+  $scope.aleatorio = function() {
+    $scope.usuario.nombre = generadorNombres.obtenerNombre();
+    $scope.usuario.apellidos = generadorNombres.obtenerApellido() + " " + generadorNombres.obtenerApellido();
+    $scope.usuario.usuario = $scope.usuario.nombre + " " + $scope.usuario.apellidos;
+  }
 }
 
 /************ UTILIDADES ************/
@@ -83,6 +88,13 @@ function actualizarUsuario($scope, $http, $location, usuario, id){
   });
 }
 
+/* Función para generar palabras capitales */
+function convertirNombre(nombre) {
+    return nombre.replace(/\w\S*/g, function(palabra) {
+      return palabra.charAt(0).toUpperCase() + palabra.substr(1).toLowerCase();
+    });
+}
+
 /***************** POPUP *****************/
 var Popup = (function() {
     "use strict";
@@ -102,3 +114,70 @@ var Popup = (function() {
 Popup.configurar({
   "selector": "#alertas"
 });
+
+/*************** NOMBRES Y APELLIDOS ***************/
+var generadorNombres = (function() {
+  var nombres = {
+    total: [],
+    informacion: 0
+  }, apellidos = {
+    total: [],
+    informacion: 0
+  }, exterior = {};
+  /* TODO: Por rendimiento debería ordenarse de mayor a menor frecuencia */
+  $.get('datos/nombres.txt')
+    .done(function(datos) {
+      nombres = tratar(datos);
+      console.log(nombres);
+    });
+  /* Ordenado de mayor a menor frecuencia */
+  $.get('datos/apellidos.txt')
+    .done(function(datos) {
+      apellidos = tratar(datos);
+      console.log(apellidos);
+    });
+  function tratar(datos) {
+    var informacion = [], acumulado = 0;
+    datos = datos.split("\n");
+    for (var dato in datos) {
+      var elemento = datos[dato].split("\t");
+      var numero = parseInt(elemento[1], 10);
+      acumulado += numero;
+      informacion.push({
+        texto: convertirNombre(elemento[0]),
+        numero: numero,
+        acumulado: acumulado,
+      });
+    }
+    return {
+      total: acumulado,
+      informacion: informacion
+    };
+  }
+  exterior.obtenerNombre = function() {
+    if (nombres.total > 0) {
+      var umbral =  Math.floor(Math.random() * nombres.total);
+      var elegido = buscar(nombres.informacion, umbral);
+      return elegido;
+    } else {
+      return '?';
+    }
+  };
+  exterior.obtenerApellido = function() {
+    if (apellidos.total > 0) {
+      var umbral =  Math.floor(Math.random() * apellidos.total);
+      var elegido = buscar(apellidos.informacion, umbral);
+      return elegido;
+    } else {
+      return '?';
+    }
+  };
+  function buscar(datos, umbral) {
+    for (var dato in datos) {
+      if (umbral < datos[dato].acumulado) {
+        return datos[dato].texto;
+      }
+    }
+  }
+  return exterior;
+}());
