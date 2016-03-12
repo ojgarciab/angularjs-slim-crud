@@ -145,7 +145,7 @@ var generadorNombres = (function() {
       informacion.push({
         texto: convertirNombre(elemento[0]),
         numero: numero,
-        acumulado: acumulado,
+        acumulado: acumulado
       });
     }
     return {
