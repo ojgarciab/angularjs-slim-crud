@@ -1,3 +1,6 @@
+/* global angular:false, $:false */
+/* eslint-env browser */
+
 /* Creamos las rutas de nuestra aplicación y sus controladores */
 angular.module('SlimCrudApp', []).
   config(['$routeProvider', function($routeProvider) {
@@ -14,7 +17,7 @@ function ControladorListado($scope, $http, $location) {
   /* Carga de datos en el controlador */
   $scope.cargar = function() {
     $http.get('usuarios').success(function(datos) {
-      if (datos.error == true) {
+      if (datos.error === true) {
         Popup.mostrar(datos.mensaje, 'danger');
       } else {
         $scope.usuarios = datos.usuarios;
@@ -46,7 +49,7 @@ function ControladorListado($scope, $http, $location) {
 function ControladorEditar($scope, $http, $location, $routeParams) {
   var id = $routeParams.id;
   $http.get('usuarios/' + id).success(function(datos) {
-    if (datos.error == true) {
+    if (datos.error === true) {
       Popup.mostrar(datos.mensaje, 'danger');
     } else {
       $scope.usuario = datos.usuario;
@@ -72,9 +75,7 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
 
 /* Función para borrar el usuario cuando se pulse el botón adecuado */
 function borrarUsuario($scope, $http, $location, usuario) {
-  console.log(usuario);
-
-  var deleteUser = confirm('¿Estás seguro de querer borrar el usuario?');
+  var deleteUser = window.confirm('¿Estás seguro de querer borrar el usuario?');
   if (deleteUser) {
     $http.delete('usuarios/' + usuario.id);
     $location.path('/');
@@ -128,13 +129,11 @@ var generadorNombres = (function() {
   $.get('datos/nombres.txt')
     .done(function(datos) {
       nombres = tratar(datos);
-      console.log(nombres);
     });
   /* Ordenado de mayor a menor frecuencia */
   $.get('datos/apellidos.txt')
     .done(function(datos) {
       apellidos = tratar(datos);
-      console.log(apellidos);
     });
   function tratar(datos) {
     var informacion = [], acumulado = 0;
@@ -146,7 +145,7 @@ var generadorNombres = (function() {
       informacion.push({
         texto: convertirNombre(elemento[0]),
         numero: numero,
-        acumulado: acumulado,
+        acumulado: acumulado
       });
     }
     return {
