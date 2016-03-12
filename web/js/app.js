@@ -1,4 +1,5 @@
-/* global angular, $ */
+/* global angular:false, $:false */
+/* eslint-env browser */
 
 /* Creamos las rutas de nuestra aplicación y sus controladores */
 angular.module('SlimCrudApp', []).
