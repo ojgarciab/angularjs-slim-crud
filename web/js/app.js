@@ -1,5 +1,4 @@
-/* global angular */
-/* global jQuery */
+/* global angular, $ */
 
 /* Creamos las rutas de nuestra aplicación y sus controladores */
 angular.module('SlimCrudApp', []).
