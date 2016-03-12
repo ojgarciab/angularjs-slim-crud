@@ -1,3 +1,5 @@
+/* globals: angular $ */
+
 /* Creamos las rutas de nuestra aplicación y sus controladores */
 angular.module('SlimCrudApp', []).
   config(['$routeProvider', function($routeProvider) {
