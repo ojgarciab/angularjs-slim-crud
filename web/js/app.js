@@ -1,4 +1,5 @@
-/* globals: angular $ */
+/* global angular */
+/* global jQuery */
 
 /* Creamos las rutas de nuestra aplicación y sus controladores */
 angular.module('SlimCrudApp', []).
@@ -16,7 +17,7 @@ function ControladorListado($scope, $http, $location) {
   /* Carga de datos en el controlador */
   $scope.cargar = function() {
     $http.get('usuarios').success(function(datos) {
-      if (datos.error == true) {
+      if (datos.error === true) {
         Popup.mostrar(datos.mensaje, 'danger');
       } else {
         $scope.usuarios = datos.usuarios;
@@ -48,7 +49,7 @@ function ControladorListado($scope, $http, $location) {
 function ControladorEditar($scope, $http, $location, $routeParams) {
   var id = $routeParams.id;
   $http.get('usuarios/' + id).success(function(datos) {
-    if (datos.error == true) {
+    if (datos.error === true) {
       Popup.mostrar(datos.mensaje, 'danger');
     } else {
       $scope.usuario = datos.usuario;
