@@ -75,8 +75,6 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
 
 /* Función para borrar el usuario cuando se pulse el botón adecuado */
 function borrarUsuario($scope, $http, $location, usuario) {
-  console.log(usuario);
-
   var deleteUser = window.confirm('¿Estás seguro de querer borrar el usuario?');
   if (deleteUser) {
     $http.delete('usuarios/' + usuario.id);
@@ -131,13 +129,11 @@ var generadorNombres = (function() {
   $.get('datos/nombres.txt')
     .done(function(datos) {
       nombres = tratar(datos);
-      console.log(nombres);
     });
   /* Ordenado de mayor a menor frecuencia */
   $.get('datos/apellidos.txt')
     .done(function(datos) {
       apellidos = tratar(datos);
-      console.log(apellidos);
     });
   function tratar(datos) {
     var informacion = [], acumulado = 0;
