@@ -92,24 +92,29 @@ class Usuarios
             /* Actualizamos el usuario seleccionado por su identificador, usando los datos enviados en el formulario */
             $conexion = \miPDO\Conexion::obtenerPDO();
             $consulta = $conexion->prepare(
-                'UPDATE usuario SET usuario = :usuario, nombre = :nombre, apellidos = :apellidos WHERE id = :id'
+                'UPDATE usuarios SET usuario = :usuario, nombre = :nombre, apellidos = :apellidos WHERE id = :id'
             );
+            $datos = $peticion->getParsedBody();
             $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
-            $consulta->bindValue(':nombre', $argumentos['id'], \PDO::PARAM_INT);
-            $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
-            //$consulta->execute();
-            $body->write(
-                json_encode([
-                    'error' => true,
-                    'mensaje' => var_export($peticion->getParsedBody(), true),
-                ])
-            );
-            /*$body->write(
-                json_encode([
-                    'error' => false,
-                    'usuario' => $consulta->fetch(\PDO::FETCH_OBJ),
-                ])
-            );*/
+            $consulta->bindValue(':usuario', $datos['usuario'], \PDO::PARAM_STR);
+            $consulta->bindValue(':nombre', $datos['nombre'], \PDO::PARAM_STR);
+            $consulta->bindValue(':apellidos', $datos['apellidos'], \PDO::PARAM_STR);
+            $consulta->execute();
+            if ($consulta->rowCount() === 1) {
+                $body->write(
+                    json_encode([
+                        'error' => false,
+                        'mensaje' => 'Registro actualizado correctamente',
+                    ])
+                );
+            } else {
+                $body->write(
+                    json_encode([
+                        'error' => true,
+                        'mensaje' => 'No se ha encontrado el registro',
+                    ])
+                );
+            }
         } catch (\PDOException $e) {
             /* En caso de error enviamos el mensaje */
             $body->write(

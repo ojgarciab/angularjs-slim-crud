@@ -89,8 +89,8 @@ function actualizarUsuario($scope, $http, $location, usuario, id){
       Popup.mostrar(datos.mensaje, 'danger');
     } else {
       Popup.mostrar(datos.mensaje, 'success');
+      $scope.activePath = $location.path('/');
     }
-    $scope.activePath = $location.path('/');
   });
 }
 
