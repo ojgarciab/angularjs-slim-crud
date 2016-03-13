@@ -85,7 +85,46 @@ class Usuarios
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
     ) {
-        // TODO: Actualizar un usuario por su identificador usando los datos enviados en el formulario
+        /* Configuramos el tipo MIME correcto para una salida JSON */
+        $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
+        $body = $respuesta->getBody();
+        try {
+            /* Actualizamos el usuario seleccionado por su identificador, usando los datos enviados en el formulario */
+            $conexion = \miPDO\Conexion::obtenerPDO();
+            $consulta = $conexion->prepare(
+                'UPDATE usuarios SET usuario = :usuario, nombre = :nombre, apellidos = :apellidos WHERE id = :id'
+            );
+            $datos = $peticion->getParsedBody();
+            $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
+            $consulta->bindValue(':usuario', $datos['usuario'], \PDO::PARAM_STR);
+            $consulta->bindValue(':nombre', $datos['nombre'], \PDO::PARAM_STR);
+            $consulta->bindValue(':apellidos', $datos['apellidos'], \PDO::PARAM_STR);
+            $consulta->execute();
+            if ($consulta->rowCount() === 1) {
+                $body->write(
+                    json_encode([
+                        'error' => false,
+                        'mensaje' => 'Registro actualizado correctamente',
+                    ])
+                );
+            } else {
+                $body->write(
+                    json_encode([
+                        'error' => true,
+                        'mensaje' => 'No se ha encontrado el registro',
+                    ])
+                );
+            }
+        } catch (\PDOException $e) {
+            /* En caso de error enviamos el mensaje */
+            $body->write(
+                json_encode([
+                    'error' => true,
+                    'mensaje' => $e->getMessage(),
+                ])
+            );
+        }
+        return $respuesta;
     }
     
     public static function deleteUsuario(
