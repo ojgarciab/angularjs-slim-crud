@@ -85,7 +85,41 @@ class Usuarios
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
     ) {
-        // TODO: Actualizar un usuario por su identificador usando los datos enviados en el formulario
+        /* Configuramos el tipo MIME correcto para una salida JSON */
+        $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
+        $body = $respuesta->getBody();
+        try {
+            /* Actualizamos el usuario seleccionado por su identificador, usando los datos enviados en el formulario */
+            $conexion = \miPDO\Conexion::obtenerPDO();
+            $consulta = $conexion->prepare(
+                'UPDATE usuario SET usuario = :usuario, nombre = :nombre, apellidos = :apellidos WHERE id = :id'
+            );
+            $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
+            $consulta->bindValue(':nombre', $argumentos['id'], \PDO::PARAM_INT);
+            $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
+            //$consulta->execute();
+            $body->write(
+                json_encode([
+                    'error' => true,
+                    'mensaje' => var_export($peticion->getParsedBody(), true),
+                ])
+            );
+            /*$body->write(
+                json_encode([
+                    'error' => false,
+                    'usuario' => $consulta->fetch(\PDO::FETCH_OBJ),
+                ])
+            );*/
+        } catch (\PDOException $e) {
+            /* En caso de error enviamos el mensaje */
+            $body->write(
+                json_encode([
+                    'error' => true,
+                    'mensaje' => $e->getMessage(),
+                ])
+            );
+        }
+        return $respuesta;
     }
     
     public static function deleteUsuario(

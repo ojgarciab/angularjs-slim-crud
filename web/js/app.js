@@ -83,8 +83,13 @@ function borrarUsuario($scope, $http, $location, usuario) {
 }
 
 function actualizarUsuario($scope, $http, $location, usuario, id){
-  $http.put('/usuarios/' + id, usuario).success(function(data) {
-    $scope.users = data;
+  
+  $http.put('usuarios/' + id, usuario).success(function(datos) {
+    if (datos.error === true) {
+      Popup.mostrar(datos.mensaje, 'danger');
+    } else {
+      Popup.mostrar(datos.mensaje, 'success');
+    }
     $scope.activePath = $location.path('/');
   });
 }
