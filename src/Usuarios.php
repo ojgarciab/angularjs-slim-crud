@@ -10,7 +10,7 @@ class Usuarios
         return $bool;
     }
     
-    public static function updateUsuario(
+    public static function createUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
