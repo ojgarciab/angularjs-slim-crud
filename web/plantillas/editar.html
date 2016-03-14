@@ -1,7 +1,8 @@
-<h2>Editar usuario</h2>
-<div class="row">
+<form novalidate name="AddNewForm" id="add-new-form" method="post" action="">
+  <h2><button class="btn btn-success" ng-disabled="AddNewForm.$invalid || isUnchanged(usuario)" id="add-new-btn" ng-click="actualizar(usuario, usuario.id)">
+          <i class="glyphicon glyphicon-floppy-disk"></i></button> Editar usuario</h2>
+  <div class="row">
   <div class="col-md-6">
-  <form novalidate name="AddNewForm" id="add-new-form" method="post" action="">
     <input type="hidden" ng-model="usuario.id" value="{{usuario.id}}" />
     <div class="form-group">
       <label for="usuario">Usuario:</label>
@@ -21,6 +22,6 @@
         <i class="glyphicon glyphicon-floppy-disk"></i> Actualizar</button></div>
     <a href="#/" class="btn btn-default"><i class="glyphicon glyphicon-backward"></i> Cancelar</a>
     <button class="btn btn-info" ng-click="aleatorio()"><i class="glyphicon glyphicon-random"></i> Aleatorio</button>
-  </form>
-</div>
-</div>
+  </div>
+  </div>
+</form>
