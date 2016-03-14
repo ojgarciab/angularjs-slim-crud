@@ -2,7 +2,7 @@
 /* eslint-env browser */
 
 /* Creamos las rutas de nuestra aplicación y sus controladores */
-angular.module('SlimCrudApp', []).
+angular.module('SlimCrudApp', ['ngRoute']).
   config(['$routeProvider', function($routeProvider) {
   $routeProvider.
       when('/', {templateUrl: 'plantillas/listado.html', controller: ControladorListado}).
@@ -113,7 +113,7 @@ function actualizarUsuario($scope, $http, $location, usuario, id){
       Popup.mostrar(datos.mensaje, 'danger');
     } else {
       Popup.mostrar(datos.mensaje, 'success');
-      $scope.activePath = $location.path('/');
+      $scope.activePath = $location.path('/').replace().notify(false);
     }
   });
 }
