@@ -7,6 +7,7 @@ angular.module('SlimCrudApp', []).
   $routeProvider.
       when('/', {templateUrl: 'plantillas/listado.html', controller: ControladorListado}).
       when('/editar/:id', {templateUrl: 'plantillas/editar.html', controller: ControladorEditar}).
+      when('/agregar', {templateUrl: 'plantillas/agregar.html', controller: ControladorAgregar}).
       otherwise({redirectTo: '/'});
 }]);
 
@@ -45,7 +46,7 @@ function ControladorListado($scope, $http, $location) {
   $scope.cargar();
 }
 
-/* Controlador para el listado de usuarios */
+/* Controlador para editar usuarios */
 function ControladorEditar($scope, $http, $location, $routeParams) {
   var id = $routeParams.id;
   $http.get('usuarios/' + id).success(function(datos) {
@@ -55,10 +56,33 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
       $scope.usuario = datos.usuario;
     }
   });
-  
   /* Control para borrar un usuario */
   $scope.borrar = function(id) {
     borrarUsuario($scope, $http, $location, id);
+  };
+  /* Control para actualizar los datos */
+  $scope.agregar = function(usuario) {
+    agregarUsuario($scope, $http, $location, usuario);
+  };
+  $scope.aleatorio = function() {
+    $scope.usuario.nombre = generadorNombres.obtenerNombre();
+    $scope.usuario.apellidos = generadorNombres.obtenerApellido() + " " + generadorNombres.obtenerApellido();
+    $scope.usuario.usuario = $scope.usuario.nombre + " " + $scope.usuario.apellidos;
+  }
+}
+
+/* Controlador para agregar usuarios */
+function ControladorAgregar($scope, $http, $location, $routeParams) {
+  /* Mostramos mensaje de edición */
+  $scope.usuario = {
+    usuario: '',
+    nombre: '',
+    apellidos: ''
+  }
+  /* Control para borrar un usuario */
+  $scope.borrar = function(id) {
+    /* No hacemos nada, sólo salir */
+    $scope.activePath = $location.path('/');
   };
   /* Control para actualizar los datos */
   $scope.actualizar = function(usuario, id) {
@@ -70,6 +94,7 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
     $scope.usuario.usuario = $scope.usuario.nombre + " " + $scope.usuario.apellidos;
   }
 }
+
 
 /************ UTILIDADES ************/
 
@@ -83,8 +108,18 @@ function borrarUsuario($scope, $http, $location, usuario) {
 }
 
 function actualizarUsuario($scope, $http, $location, usuario, id){
-  
   $http.put('usuarios/' + id, usuario).success(function(datos) {
+    if (datos.error === true) {
+      Popup.mostrar(datos.mensaje, 'danger');
+    } else {
+      Popup.mostrar(datos.mensaje, 'success');
+      $scope.activePath = $location.path('/');
+    }
+  });
+}
+
+function agregarUsuario($scope, $http, $location, usuario){
+  $http.put('usuarios', usuario).success(function(datos) {
     if (datos.error === true) {
       Popup.mostrar(datos.mensaje, 'danger');
     } else {
