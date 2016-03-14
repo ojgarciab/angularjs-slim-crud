@@ -10,9 +10,50 @@ class Usuarios
         return $bool;
     }
     
-    public static function createUsuario()
-    {
-        // TODO: Crear usuario nuevo con los datos enviados en el formulario
+    public static function createUsuario(
+        \Psr\Http\Message\ServerRequestInterface $peticion,
+        \Psr\Http\Message\ResponseInterface $respuesta,
+        $argumentos
+    ) {
+        /* Configuramos el tipo MIME correcto para una salida JSON */
+        $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
+        $body = $respuesta->getBody();
+        try {
+            /* Creamos el usuario usando los datos enviados en el formulario */
+            $conexion = \miPDO\Conexion::obtenerPDO();
+            $consulta = $conexion->prepare(
+                'INSERT INTO usuarios (usuario, nombre, apellidos) VALUES (:usuario, :nombre, :apellidos)'
+            );
+            $datos = $peticion->getParsedBody();
+            $consulta->bindValue(':usuario', $datos['usuario'], \PDO::PARAM_STR);
+            $consulta->bindValue(':nombre', $datos['nombre'], \PDO::PARAM_STR);
+            $consulta->bindValue(':apellidos', $datos['apellidos'], \PDO::PARAM_STR);
+            $consulta->execute();
+            if ($consulta->rowCount() === 1) {
+                $body->write(
+                    json_encode([
+                        'error' => false,
+                        'mensaje' => 'Registro agregado correctamente',
+                    ])
+                );
+            } else {
+                $body->write(
+                    json_encode([
+                        'error' => true,
+                        'mensaje' => 'No se ha agregado el registro',
+                    ])
+                );
+            }
+        } catch (\PDOException $e) {
+            /* En caso de error enviamos el mensaje */
+            $body->write(
+                json_encode([
+                    'error' => true,
+                    'mensaje' => $e->getMessage(),
+                ])
+            );
+        }
+        return $respuesta;
     }
     
     public static function readUsuarios(
