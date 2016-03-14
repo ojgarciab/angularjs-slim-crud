@@ -61,8 +61,8 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
     borrarUsuario($scope, $http, $location, id);
   };
   /* Control para actualizar los datos */
-  $scope.agregar = function(usuario) {
-    agregarUsuario($scope, $http, $location, usuario);
+  $scope.actualizar = function(usuario) {
+    actualizarUsuario($scope, $http, $location, usuario, id);
   };
   $scope.aleatorio = function() {
     $scope.usuario.nombre = generadorNombres.obtenerNombre();
@@ -85,8 +85,8 @@ function ControladorAgregar($scope, $http, $location, $routeParams) {
     $scope.activePath = $location.path('/');
   };
   /* Control para actualizar los datos */
-  $scope.actualizar = function(usuario, id) {
-    actualizarUsuario($scope, $http, $location, usuario, id);
+  $scope.agregar = function(usuario, id) {
+    agregarUsuario($scope, $http, $location, usuario);
   };
   $scope.aleatorio = function() {
     $scope.usuario.nombre = generadorNombres.obtenerNombre();
