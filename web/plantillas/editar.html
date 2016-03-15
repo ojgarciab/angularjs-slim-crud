@@ -1,4 +1,4 @@
-<form novalidate name="AddNewForm" id="add-new-form" method="post" action="">
+<form novalidate name="AddNewForm" id="add-new-form">
   <h2><button class="btn btn-success" ng-disabled="AddNewForm.$invalid || isUnchanged(usuario)" id="add-new-btn" ng-click="actualizar(usuario, usuario.id)">
           <i class="glyphicon glyphicon-floppy-disk"></i></button> Editar usuario</h2>
   <div class="row">
@@ -21,7 +21,7 @@
       <button class="btn btn-success" ng-disabled="AddNewForm.$invalid || isUnchanged(usuario)" id="add-new-btn" ng-click="actualizar(usuario, usuario.id)">
         <i class="glyphicon glyphicon-floppy-disk"></i> Actualizar</button></div>
     <a href="#/" class="btn btn-default"><i class="glyphicon glyphicon-backward"></i> Cancelar</a>
-    <button class="btn btn-info" ng-click="aleatorio()"><i class="glyphicon glyphicon-random"></i> Aleatorio</button>
+    <div class="btn btn-info" ng-click="aleatorio()"><i class="glyphicon glyphicon-random"></i> Aleatorio</div>
   </div>
   </div>
 </form>
