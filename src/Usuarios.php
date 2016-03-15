@@ -10,7 +10,7 @@ class Usuarios
         return $bool;
     }
     
-    public static function createUsuario(
+    public function createUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
@@ -56,7 +56,7 @@ class Usuarios
         return $respuesta;
     }
     
-    public static function readUsuarios(
+    public function readUsuarios(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta
     ) {
@@ -87,7 +87,7 @@ class Usuarios
         return $respuesta;
     }
     
-    public static function readUsuario(
+    public function readUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
@@ -121,7 +121,7 @@ class Usuarios
         return $respuesta;
     }
     
-    public static function updateUsuario(
+    public function updateUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
@@ -168,7 +168,7 @@ class Usuarios
         return $respuesta;
     }
     
-    public static function deleteUsuario(
+    public function deleteUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
         $argumentos
