@@ -18,9 +18,11 @@ function ControladorListado($scope, $http, $location) {
   /* Carga de datos en el controlador */
   $scope.cargar = function() {
     $http.get('usuarios').success(function(datos) {
+      /* En caso de producirse un error en el motor PHP, mostramos el mensaje de error */
       if (datos.error === true) {
         Popup.mostrar(datos.mensaje, 'danger');
       } else {
+        /* En caso contrario actualizamos los datos de la vista con los obtenidos */
         $scope.usuarios = datos.usuarios;
       }
     });
@@ -49,10 +51,13 @@ function ControladorListado($scope, $http, $location) {
 /* Controlador para editar usuarios */
 function ControladorEditar($scope, $http, $location, $routeParams) {
   var id = $routeParams.id;
+  /* Solicitamos al motor el usuario por su "id" mediante GET */
   $http.get('usuarios/' + id).success(function(datos) {
+    /* En caso de producirse un error en el motor PHP, mostramos el mensaje de error */
     if (datos.error === true) {
       Popup.mostrar(datos.mensaje, 'danger');
     } else {
+      /* En caso contrario rellenamos los datos del formulario con los recibidos */
       $scope.usuario = datos.usuario;
     }
   });
@@ -64,6 +69,7 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
   $scope.actualizar = function(usuario) {
     actualizarUsuario($scope, $http, $location, usuario, id);
   };
+  /* Hacemos uso de las funciones de nombres y apellidos para generar uno aleatorio */
   $scope.aleatorio = function() {
     $scope.usuario.nombre = generadorNombres.obtenerNombre();
     $scope.usuario.apellidos = generadorNombres.obtenerApellido() + " " + generadorNombres.obtenerApellido();
@@ -107,6 +113,7 @@ function borrarUsuario($scope, $http, $location, usuario) {
   }
 }
 
+/* Función para actualizar un usuario dado su id */
 function actualizarUsuario($scope, $http, $location, usuario, id){
   $http.put('usuarios/' + id, usuario).success(function(datos) {
     if (datos.error === true) {
