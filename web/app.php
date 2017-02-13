@@ -1,4 +1,5 @@
 <?php
+
 require '../vendor/autoload.php';
 
 $app = new \Slim\App();
@@ -9,6 +10,5 @@ $app->put('/usuarios', '\ASC\Usuarios:createUsuario');
 $app->get('/usuarios/{id}', '\ASC\Usuarios:readUsuario');
 $app->put('/usuarios/{id}', '\ASC\Usuarios:updateUsuario');
 $app->delete('/usuarios/{id}', '\ASC\Usuarios:deleteUsuario');
-
 
 $app->run();

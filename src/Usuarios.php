@@ -1,15 +1,16 @@
 <?php
+
 namespace ASC;
 
 class Usuarios
 {
     private $conexion = false;
-    
+
     public function testIt($bool = true)
     {
         return $bool;
     }
-    
+
     public function createUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
@@ -32,14 +33,14 @@ class Usuarios
             if ($consulta->rowCount() === 1) {
                 $body->write(
                     json_encode([
-                        'error' => false,
+                        'error'   => false,
                         'mensaje' => 'Registro agregado correctamente',
                     ])
                 );
             } else {
                 $body->write(
                     json_encode([
-                        'error' => true,
+                        'error'   => true,
                         'mensaje' => 'No se ha agregado el registro',
                     ])
                 );
@@ -48,14 +49,15 @@ class Usuarios
             /* En caso de error enviamos el mensaje */
             $body->write(
                 json_encode([
-                    'error' => true,
+                    'error'   => true,
                     'mensaje' => $e->getMessage(),
                 ])
             );
         }
+
         return $respuesta;
     }
-    
+
     public function readUsuarios(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta
@@ -71,7 +73,7 @@ class Usuarios
             );
             $body->write(
                 json_encode([
-                    'error' => false,
+                    'error'    => false,
                     'usuarios' => $resultado->fetchAll(\PDO::FETCH_OBJ),
                 ])
             );
@@ -79,14 +81,15 @@ class Usuarios
             /* En caso de error enviamos el mensaje */
             $body->write(
                 json_encode([
-                    'error' => true,
+                    'error'   => true,
                     'mensaje' => $e->getMessage(),
                 ])
             );
         }
+
         return $respuesta;
     }
-    
+
     public function readUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
@@ -105,7 +108,7 @@ class Usuarios
             $consulta->execute();
             $body->write(
                 json_encode([
-                    'error' => false,
+                    'error'   => false,
                     'usuario' => $consulta->fetch(\PDO::FETCH_OBJ),
                 ])
             );
@@ -113,14 +116,15 @@ class Usuarios
             /* En caso de error enviamos el mensaje */
             $body->write(
                 json_encode([
-                    'error' => true,
+                    'error'   => true,
                     'mensaje' => $e->getMessage(),
                 ])
             );
         }
+
         return $respuesta;
     }
-    
+
     public function updateUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
@@ -144,14 +148,14 @@ class Usuarios
             if ($consulta->rowCount() === 1) {
                 $body->write(
                     json_encode([
-                        'error' => false,
+                        'error'   => false,
                         'mensaje' => 'Registro actualizado correctamente',
                     ])
                 );
             } else {
                 $body->write(
                     json_encode([
-                        'error' => true,
+                        'error'   => true,
                         'mensaje' => 'No se ha encontrado el registro',
                     ])
                 );
@@ -160,14 +164,15 @@ class Usuarios
             /* En caso de error enviamos el mensaje */
             $body->write(
                 json_encode([
-                    'error' => true,
+                    'error'   => true,
                     'mensaje' => $e->getMessage(),
                 ])
             );
         }
+
         return $respuesta;
     }
-    
+
     public function deleteUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
@@ -185,7 +190,7 @@ class Usuarios
             $consulta->execute();
             $body->write(
                 json_encode([
-                    'error' => false,
+                    'error'    => false,
                     'borrados' => $consulta->rowCount(),
                 ])
             );
@@ -193,11 +198,12 @@ class Usuarios
             /* En caso de error enviamos el mensaje */
             $body->write(
                 json_encode([
-                    'error' => true,
+                    'error'   => true,
                     'mensaje' => $e->getMessage(),
                 ])
             );
         }
+
         return $respuesta;
     }
 }
