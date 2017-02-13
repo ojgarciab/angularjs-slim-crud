@@ -1,16 +1,17 @@
 <?php
+
 namespace miPDO;
 
 /* Factoría singleton para conexiones PDO */
 class Conexion
 {
     private static $configuracion = [
-        'dsn' => 'mysql:host=localhost;dbname=asc;charset=utf8',
-        'usuario' => 'root',
-        'clave' => '',
-        'opciones' => array(
+        'dsn'      => 'mysql:host=localhost;dbname=asc;charset=utf8',
+        'usuario'  => 'root',
+        'clave'    => '',
+        'opciones' => [
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-        ),
+        ],
     ];
     private static $conexion = false;
 
@@ -25,6 +26,7 @@ class Conexion
             );
             self::$conexion->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
+
         return self::$conexion;
     }
 }
