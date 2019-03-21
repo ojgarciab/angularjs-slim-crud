@@ -1,5 +1,7 @@
 # angularjs-slim-crud
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1af206b55fc4433a2032222ca1da616)](https://app.codacy.com/app/ojgarciab/angularjs-slim-crud?utm_source=github.com&utm_medium=referral&utm_content=ojgarciab/angularjs-slim-crud&utm_campaign=Badge_Grade_Dashboard)
+
 ## Introducción
 Crear, Leer, Actualizar y Borrar (CLAB o ABM en castellano, CRUD en inglés) usando Angujar.js como interfaz (frontend) y PHP(Slim)/MySQL como motor (backend).
 
