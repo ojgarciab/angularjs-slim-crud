@@ -1,4 +1,5 @@
 <?php
+
 /* Hacer una copia de este archivo a configuracion.php para que se use */
 
 self::$configuracion = array_merge(
@@ -11,4 +12,3 @@ self::$configuracion = array_merge(
         ],
     ]
 );
-

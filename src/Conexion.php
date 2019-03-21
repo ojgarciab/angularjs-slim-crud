@@ -16,7 +16,7 @@ class Conexion
 
     public static function obtenerPDO()
     {
-        is_file(__DIR__ . '/configuracion.php') && require_once __DIR__ . '/configuracion.php';
+        is_file(__DIR__.'/configuracion.php') && require_once __DIR__.'/configuracion.php';
         if (self::$conexion === false) {
             self::$conexion = new \PDO(
                 self::$configuracion['dsn'],
