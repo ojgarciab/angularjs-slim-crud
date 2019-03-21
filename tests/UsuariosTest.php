@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-class UsuariosTest extends \PHPUnit_Framework_TestCase
+class UsuariosTest extends \PHPUnit\Framework\TestCase
 {
     protected $app;
 
