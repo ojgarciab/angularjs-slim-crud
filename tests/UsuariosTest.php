@@ -8,9 +8,9 @@ class UsuariosTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-	$api = new \ASC\Api();
+        $api = new \ASC\Api();
         $this->app = $api->getApp();
-     }
+    }
 
     public function testGetUsuarios()
     {
