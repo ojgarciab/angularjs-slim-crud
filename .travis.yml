@@ -9,7 +9,7 @@ php:
 service:
   - mysql
 before_install:
-  - mysql -u root -e 'CREATE DATABASE asc;'
+  - mysql -u root -e 'CREATE DATABASE `asc`;'
   - mysql -u root asc < sql.esquema.txt
   - mysql -u roor asc < sql.datos.txt
 install:
