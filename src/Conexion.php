@@ -10,13 +10,13 @@ class Conexion
         'usuario'  => 'root',
         'clave'    => '',
         'opciones' => [
-            \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
         ],
     ];
     private static $conexion = false;
 
     public static function obtenerPDO()
     {
+        is_file(__DIR__.'/configuracion.php') && require_once __DIR__.'/configuracion.php';
         if (self::$conexion === false) {
             self::$conexion = new \PDO(
                 self::$configuracion['dsn'],
