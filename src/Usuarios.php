@@ -19,6 +19,7 @@ class Usuarios
         /* Configuramos el tipo MIME correcto para una salida JSON */
         $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
         $body = $respuesta->getBody();
+
         try {
             /* Creamos el usuario usando los datos enviados en el formulario */
             $conexion = \miPDO\Conexion::obtenerPDO();
@@ -65,6 +66,7 @@ class Usuarios
         /* Configuramos el tipo MIME correcto para una salida JSON */
         $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
         $body = $respuesta->getBody();
+
         try {
             /* Obtenemos el listado de ususarios */
             $conexion = \miPDO\Conexion::obtenerPDO();
@@ -98,6 +100,7 @@ class Usuarios
         /* Configuramos el tipo MIME correcto para una salida JSON */
         $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
         $body = $respuesta->getBody();
+
         try {
             /* Obtenemos el usuario cuyo identificador ha sido pasado como parámetro */
             $conexion = \miPDO\Conexion::obtenerPDO();
@@ -133,6 +136,7 @@ class Usuarios
         /* Configuramos el tipo MIME correcto para una salida JSON */
         $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
         $body = $respuesta->getBody();
+
         try {
             /* Actualizamos el usuario seleccionado por su identificador, usando los datos enviados en el formulario */
             $conexion = \miPDO\Conexion::obtenerPDO();
@@ -180,6 +184,7 @@ class Usuarios
     ) {
         $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
         $body = $respuesta->getBody();
+
         try {
             /* Borramos el usuario con el identificador proporcionado */
             $conexion = \miPDO\Conexion::obtenerPDO();
