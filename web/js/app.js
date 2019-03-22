@@ -35,7 +35,7 @@ var generadorNombres = (function() {
     }
     return {
       total: acumulado,
-      informacion: informacion
+      informacion,
     };
   }
   exterior.obtenerNombre = function() {
@@ -86,11 +86,9 @@ function ControladorListado($scope, $http, $location) {
   $scope.borrar = function(usuario) {
     borrarUsuario($scope, $http, $location, usuario);
     /* Buscamos el elemento para borrarlo de la vista */
-    for (var actual in $scope.usuarios) {
-      if ($scope.usuarios[actual].id == usuario.id) {
-        $scope.usuarios.splice(actual, 1);
-      }
-    }
+    $scope.usuarios = $scope.usuarios.filter(function(valor) {
+      return valor.id !== usuario.id;
+    });
   };
   /* Función de ordenado de columnas */
   $scope.columna = "usuario";
@@ -153,7 +151,7 @@ function ControladorAgregar($scope, $http, $location, $routeParams) {
     $scope.usuario.nombre = generadorNombres.obtenerNombre();
     $scope.usuario.apellidos = generadorNombres.obtenerApellido() + " " + generadorNombres.obtenerApellido();
     $scope.usuario.usuario = $scope.usuario.nombre + " " + $scope.usuario.apellidos;
-  }
+  };
 }
 
 
