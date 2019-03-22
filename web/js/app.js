@@ -1,26 +1,16 @@
 /* global angular:false, $:false */
 /* eslint-env browser */
 
-/* Creamos las rutas de nuestra aplicación y sus controladores */
-angular.module('SlimCrudApp', ['ngRoute']).
-  config(['$routeProvider', function($routeProvider) {
-  $routeProvider.
-      when('/', {templateUrl: 'plantillas/listado.html', controller: ControladorListado}).
-      when('/editar/:id', {templateUrl: 'plantillas/editar.html', controller: ControladorEditar}).
-      when('/agregar', {templateUrl: 'plantillas/agregar.html', controller: ControladorAgregar}).
-      otherwise({redirectTo: '/'});
-}]);
-
 /********** CONTROLADORES **********/
 
 /* Controlador para el listado de usuarios */
 function ControladorListado($scope, $http, $location) {
   /* Carga de datos en el controlador */
   $scope.cargar = function() {
-    $http.get('usuarios').success(function(datos) {
+    $http.get("usuarios").success(function(datos) {
       /* En caso de producirse un error en el motor PHP, mostramos el mensaje de error */
       if (datos.error === true) {
-        Popup.mostrar(datos.mensaje, 'danger');
+        Popup.mostrar(datos.mensaje, "danger");
       } else {
         /* En caso contrario actualizamos los datos de la vista con los obtenidos */
         $scope.usuarios = datos.usuarios;
@@ -38,7 +28,7 @@ function ControladorListado($scope, $http, $location) {
     }
   };
   /* Función de ordenado de columnas */
-  $scope.columna = 'usuario';
+  $scope.columna = "usuario";
   $scope.orden = true;
   $scope.ordenar = function(columna) {
     $scope.orden = ($scope.columna === columna) ? !$scope.orden : false;
@@ -52,10 +42,10 @@ function ControladorListado($scope, $http, $location) {
 function ControladorEditar($scope, $http, $location, $routeParams) {
   var id = $routeParams.id;
   /* Solicitamos al motor el usuario por su "id" mediante GET */
-  $http.get('usuarios/' + id).success(function(datos) {
+  $http.get("usuarios/" + id).success(function(datos) {
     /* En caso de producirse un error en el motor PHP, mostramos el mensaje de error */
     if (datos.error === true) {
-      Popup.mostrar(datos.mensaje, 'danger');
+      Popup.mostrar(datos.mensaje, "danger");
     } else {
       /* En caso contrario rellenamos los datos del formulario con los recibidos */
       $scope.usuario = datos.usuario;
@@ -81,14 +71,14 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
 function ControladorAgregar($scope, $http, $location, $routeParams) {
   /* Mostramos mensaje de edición */
   $scope.usuario = {
-    usuario: '',
-    nombre: '',
-    apellidos: ''
+    usuario: "",
+    nombre: "",
+    apellidos: ""
   }
   /* Control para borrar un usuario */
   $scope.borrar = function(id) {
     /* No hacemos nada, sólo salir */
-    $scope.activePath = $location.path('/');
+    $scope.activePath = $location.path("/");
   };
   /* Control para actualizar los datos */
   $scope.agregar = function(usuario, id) {
@@ -106,32 +96,32 @@ function ControladorAgregar($scope, $http, $location, $routeParams) {
 
 /* Función para borrar el usuario cuando se pulse el botón adecuado */
 function borrarUsuario($scope, $http, $location, usuario) {
-  var deleteUser = window.confirm('¿Estás seguro de querer borrar el usuario?');
+  var deleteUser = window.confirm("¿Estás seguro de querer borrar el usuario?");
   if (deleteUser) {
-    $http.delete('usuarios/' + usuario.id);
-    $location.path('/');
+    $http.delete("usuarios/" + usuario.id);
+    $location.path("/");
   }
 }
 
 /* Función para actualizar un usuario dado su id */
 function actualizarUsuario($scope, $http, $location, usuario, id){
-  $http.put('usuarios/' + id, usuario).success(function(datos) {
+  $http.put("usuarios/" + id, usuario).success(function(datos) {
     if (datos.error === true) {
-      Popup.mostrar(datos.mensaje, 'danger');
+      Popup.mostrar(datos.mensaje, "danger");
     } else {
-      Popup.mostrar(datos.mensaje, 'success');
-      $scope.activePath = $location.path('/').replace().notify(false);
+      Popup.mostrar(datos.mensaje, "success");
+      $scope.activePath = $location.path("/").replace().notify(false);
     }
   });
 }
 
 function agregarUsuario($scope, $http, $location, usuario){
-  $http.put('usuarios', usuario).success(function(datos) {
+  $http.put("usuarios", usuario).success(function(datos) {
     if (datos.error === true) {
-      Popup.mostrar(datos.mensaje, 'danger');
+      Popup.mostrar(datos.mensaje, "danger");
     } else {
-      Popup.mostrar(datos.mensaje, 'success');
-      $scope.activePath = $location.path('/');
+      Popup.mostrar(datos.mensaje, "success");
+      $scope.activePath = $location.path("/");
     }
   });
 }
@@ -153,7 +143,7 @@ var Popup = (function() {
     };
     que.mostrar = function(texto, clase) {
         elemento.find("span").html(texto);
-        elemento.attr('class', "alert alert-" + clase);
+        elemento.attr("class", "alert alert-" + clase);
         elemento.delay(200).fadeIn().delay(4000).fadeOut();
     };
     return que;
@@ -173,12 +163,12 @@ var generadorNombres = (function() {
     informacion: 0
   }, exterior = {};
   /* TODO: Por rendimiento debería ordenarse de mayor a menor frecuencia */
-  $.get('datos/nombres.txt')
+  $.get("datos/nombres.txt")
     .done(function(datos) {
       nombres = tratar(datos);
     });
   /* Ordenado de mayor a menor frecuencia */
-  $.get('datos/apellidos.txt')
+  $.get("datos/apellidos.txt")
     .done(function(datos) {
       apellidos = tratar(datos);
     });
@@ -206,7 +196,7 @@ var generadorNombres = (function() {
       var elegido = buscar(nombres.informacion, umbral);
       return elegido;
     } else {
-      return '?';
+      return "?";
     }
   };
   exterior.obtenerApellido = function() {
@@ -215,7 +205,7 @@ var generadorNombres = (function() {
       var elegido = buscar(apellidos.informacion, umbral);
       return elegido;
     } else {
-      return '?';
+      return "?";
     }
   };
   function buscar(datos, umbral) {
@@ -227,3 +217,14 @@ var generadorNombres = (function() {
   }
   return exterior;
 }());
+
+/* Creamos las rutas de nuestra aplicación y sus controladores */
+angular.module("SlimCrudApp", ["ngRoute"]).
+  config(["$routeProvider", function($routeProvider) {
+  $routeProvider.
+      when("/", {templateUrl: "plantillas/listado.html", controller: ControladorListado}).
+      when("/editar/:id", {templateUrl: "plantillas/editar.html", controller: ControladorEditar}).
+      when("/agregar", {templateUrl: "plantillas/agregar.html", controller: ControladorAgregar}).
+      otherwise({redirectTo: "/"});
+}]);
+
