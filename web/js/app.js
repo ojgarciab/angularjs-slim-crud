@@ -73,16 +73,6 @@ var generadorNombres = (function() {
     total: [],
     informacion: 0
   }, exterior = {};
-  /* TODO: Por rendimiento debería ordenarse de mayor a menor frecuencia */
-  $.get("datos/nombres.txt")
-    .done(function(datos) {
-      nombres = tratar(datos);
-    });
-  /* Ordenado de mayor a menor frecuencia */
-  $.get("datos/apellidos.txt")
-    .done(function(datos) {
-      apellidos = tratar(datos);
-    });
   function tratar(datos) {
     var informacion = [], acumulado = 0;
     datos = datos.split("\n");
@@ -100,6 +90,23 @@ var generadorNombres = (function() {
       total: acumulado,
       informacion,
     };
+  }
+  /* TODO: Por rendimiento debería ordenarse de mayor a menor frecuencia */
+  $.get("datos/nombres.txt")
+    .done(function(datos) {
+      nombres = tratar(datos);
+    });
+  /* Ordenado de mayor a menor frecuencia */
+  $.get("datos/apellidos.txt")
+    .done(function(datos) {
+      apellidos = tratar(datos);
+    });
+  function buscar(datos, umbral) {
+    for (let dato of datos) {
+      if (umbral < dato.acumulado) {
+        return dato.texto;
+      }
+    }
   }
   exterior.obtenerNombre = function() {
     if (nombres.total > 0) {
@@ -119,13 +126,6 @@ var generadorNombres = (function() {
       return "?";
     }
   };
-  function buscar(datos, umbral) {
-    for (let dato of datos) {
-      if (umbral < dato.acumulado) {
-        return dato.texto;
-      }
-    }
-  }
   return exterior;
 }());
 
