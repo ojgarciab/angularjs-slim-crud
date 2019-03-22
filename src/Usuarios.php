@@ -6,8 +6,7 @@ class Usuarios
 {
     public function createUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
-        \Psr\Http\Message\ResponseInterface $respuesta,
-        $argumentos
+        \Psr\Http\Message\ResponseInterface $respuesta
     ) {
         /* Configuramos el tipo MIME correcto para una salida JSON */
         $respuesta = $respuesta->withHeader('Content-Type', 'application/json');
