@@ -1,7 +1,70 @@
 /* global angular:false, $:false */
 /* eslint-env browser */
 
+/***************** POPUP *****************/
+
+var Popup = (function() {
+    "use strict";
+    var elemento,
+        que = {};
+    que.configurar = function(opciones) {
+        elemento = $(opciones.selector);
+    };
+    que.mostrar = function(texto, clase) {
+        elemento.find("span").html(texto);
+        elemento.attr("class", "alert alert-" + clase);
+        elemento.delay(200).fadeIn().delay(4000).fadeOut();
+    };
+    return que;
+}());
+
+Popup.configurar({
+  "selector": "#alertas"
+});
+
+/************ UTILIDADES ************/
+
+/* Función para borrar el usuario cuando se pulse el botón adecuado */
+function borrarUsuario($scope, $http, $location, usuario) {
+  var deleteUser = window.confirm("¿Estás seguro de querer borrar el usuario?");
+  if (deleteUser) {
+    $http.delete("usuarios/" + usuario.id);
+    $location.path("/");
+  }
+}
+
+/* Función para actualizar un usuario dado su id */
+function actualizarUsuario($scope, $http, $location, usuario, id){
+  $http.put("usuarios/" + id, usuario).success(function(datos) {
+    if (datos.error === true) {
+      Popup.mostrar(datos.mensaje, "danger");
+    } else {
+      Popup.mostrar(datos.mensaje, "success");
+      $scope.activePath = $location.path("/").replace().notify(false);
+    }
+  });
+}
+
+function agregarUsuario($scope, $http, $location, usuario){
+  $http.put("usuarios", usuario).success(function(datos) {
+    if (datos.error === true) {
+      Popup.mostrar(datos.mensaje, "danger");
+    } else {
+      Popup.mostrar(datos.mensaje, "success");
+      $scope.activePath = $location.path("/");
+    }
+  });
+}
+
+/* Función para generar palabras capitales */
+function convertirNombre(nombre) {
+    return nombre.replace(/\w\S*/g, function(palabra) {
+      return palabra.charAt(0).toUpperCase() + palabra.substr(1).toLowerCase();
+    });
+}
+
 /*************** NOMBRES Y APELLIDOS ***************/
+
 var generadorNombres = (function() {
   var nombres = {
     total: [],
@@ -87,6 +150,7 @@ function ControladorListado($scope, $http, $location) {
     borrarUsuario($scope, $http, $location, usuario);
     /* Buscamos el elemento para borrarlo de la vista */
     $scope.usuarios = $scope.usuarios.filter(function(valor) {
+      /* Mantenemos todos los usuarios cuya id no sea la eliminada */
       return valor.id !== usuario.id;
     });
   };
@@ -127,7 +191,7 @@ function ControladorEditar($scope, $http, $location, $routeParams) {
     $scope.usuario.nombre = generadorNombres.obtenerNombre();
     $scope.usuario.apellidos = generadorNombres.obtenerApellido() + " " + generadorNombres.obtenerApellido();
     $scope.usuario.usuario = $scope.usuario.nombre + " " + $scope.usuario.apellidos;
-  }
+  };
 }
 
 /* Controlador para agregar usuarios */
@@ -137,7 +201,7 @@ function ControladorAgregar($scope, $http, $location, $routeParams) {
     usuario: "",
     nombre: "",
     apellidos: ""
-  }
+  };
   /* Control para borrar un usuario */
   $scope.borrar = function(id) {
     /* No hacemos nada, sólo salir */
@@ -153,68 +217,6 @@ function ControladorAgregar($scope, $http, $location, $routeParams) {
     $scope.usuario.usuario = $scope.usuario.nombre + " " + $scope.usuario.apellidos;
   };
 }
-
-
-/************ UTILIDADES ************/
-
-/* Función para borrar el usuario cuando se pulse el botón adecuado */
-function borrarUsuario($scope, $http, $location, usuario) {
-  var deleteUser = window.confirm("¿Estás seguro de querer borrar el usuario?");
-  if (deleteUser) {
-    $http.delete("usuarios/" + usuario.id);
-    $location.path("/");
-  }
-}
-
-/* Función para actualizar un usuario dado su id */
-function actualizarUsuario($scope, $http, $location, usuario, id){
-  $http.put("usuarios/" + id, usuario).success(function(datos) {
-    if (datos.error === true) {
-      Popup.mostrar(datos.mensaje, "danger");
-    } else {
-      Popup.mostrar(datos.mensaje, "success");
-      $scope.activePath = $location.path("/").replace().notify(false);
-    }
-  });
-}
-
-function agregarUsuario($scope, $http, $location, usuario){
-  $http.put("usuarios", usuario).success(function(datos) {
-    if (datos.error === true) {
-      Popup.mostrar(datos.mensaje, "danger");
-    } else {
-      Popup.mostrar(datos.mensaje, "success");
-      $scope.activePath = $location.path("/");
-    }
-  });
-}
-
-/* Función para generar palabras capitales */
-function convertirNombre(nombre) {
-    return nombre.replace(/\w\S*/g, function(palabra) {
-      return palabra.charAt(0).toUpperCase() + palabra.substr(1).toLowerCase();
-    });
-}
-
-/***************** POPUP *****************/
-var Popup = (function() {
-    "use strict";
-    var elemento,
-        que = {};
-    que.configurar = function(opciones) {
-        elemento = $(opciones.selector);
-    };
-    que.mostrar = function(texto, clase) {
-        elemento.find("span").html(texto);
-        elemento.attr("class", "alert alert-" + clase);
-        elemento.delay(200).fadeIn().delay(4000).fadeOut();
-    };
-    return que;
-}());
-
-Popup.configurar({
-  "selector": "#alertas"
-});
 
 /* Creamos las rutas de nuestra aplicación y sus controladores */
 angular.module("SlimCrudApp", ["ngRoute"]).
