@@ -1,5 +1,6 @@
 composer.phar
 /vendor/
+*~
 
 # Ignoramos modificaciones en la configuración de la base de datos:
 src/configuracion.php

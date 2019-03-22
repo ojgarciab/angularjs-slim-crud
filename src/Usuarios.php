@@ -4,13 +4,6 @@ namespace ASC;
 
 class Usuarios
 {
-    private $conexion = false;
-
-    public function testIt($bool = true)
-    {
-        return $bool;
-    }
-
     public function createUsuario(
         \Psr\Http\Message\ServerRequestInterface $peticion,
         \Psr\Http\Message\ResponseInterface $respuesta,
@@ -32,29 +25,26 @@ class Usuarios
             $consulta->bindValue(':apellidos', $datos['apellidos'], \PDO::PARAM_STR);
             $consulta->execute();
             if ($consulta->rowCount() === 1) {
-                $body->write(
-                    json_encode([
-                        'error'   => false,
-                        'mensaje' => 'Registro agregado correctamente',
-                    ])
-                );
+                $salida = [
+                    'error'   => false,
+                    'mensaje' => 'Registro agregado correctamente',
+                ];
             } else {
-                $body->write(
-                    json_encode([
-                        'error'   => true,
-                        'mensaje' => 'No se ha agregado el registro',
-                    ])
-                );
+                $salida = [
+                    'error'   => true,
+                    'mensaje' => 'No se ha agregado el registro',
+                ];
             }
         } catch (\PDOException $e) {
             /* En caso de error enviamos el mensaje */
-            $body->write(
-                json_encode([
-                    'error'   => true,
-                    'mensaje' => $e->getMessage(),
-                ])
-            );
+            $salida = [
+                'error'   => true,
+                'mensaje' => $e->getMessage(),
+            ];
         }
+
+        /* Codificamos el resultado en JSON y lo enviamos a la salida */
+        $body->write(json_encode($salida));
 
         return $respuesta;
     }
@@ -73,21 +63,20 @@ class Usuarios
             $resultado = $conexion->query(
                 'SELECT * FROM usuarios'
             );
-            $body->write(
-                json_encode([
-                    'error'    => false,
-                    'usuarios' => $resultado->fetchAll(\PDO::FETCH_OBJ),
-                ])
-            );
+            $salida = [
+                'error'    => false,
+                'usuarios' => $resultado->fetchAll(\PDO::FETCH_OBJ),
+            ];
         } catch (\PDOException $e) {
             /* En caso de error enviamos el mensaje */
-            $body->write(
-                json_encode([
-                    'error'   => true,
-                    'mensaje' => $e->getMessage(),
-                ])
-            );
+            $salida = [
+                'error'   => true,
+                'mensaje' => $e->getMessage(),
+            ];
         }
+
+        /* Codificamos el resultado en JSON y lo enviamos a la salida */
+        $body->write(json_encode($salida));
 
         return $respuesta;
     }
@@ -109,21 +98,20 @@ class Usuarios
             );
             $consulta->bindValue(':id', $argumentos['id'], \PDO::PARAM_INT);
             $consulta->execute();
-            $body->write(
-                json_encode([
-                    'error'   => false,
-                    'usuario' => $consulta->fetch(\PDO::FETCH_OBJ),
-                ])
-            );
+            $salida = [
+                'error'   => false,
+                'usuario' => $consulta->fetch(\PDO::FETCH_OBJ),
+            ];
         } catch (\PDOException $e) {
             /* En caso de error enviamos el mensaje */
-            $body->write(
-                json_encode([
-                    'error'   => true,
-                    'mensaje' => $e->getMessage(),
-                ])
-            );
+            $salida = [
+                'error'   => true,
+                'mensaje' => $e->getMessage(),
+            ];
         }
+
+        /* Codificamos el resultado en JSON y lo enviamos a la salida */
+        $body->write(json_encode($salida));
 
         return $respuesta;
     }
@@ -150,29 +138,26 @@ class Usuarios
             $consulta->bindValue(':apellidos', $datos['apellidos'], \PDO::PARAM_STR);
             $consulta->execute();
             if ($consulta->rowCount() === 1) {
-                $body->write(
-                    json_encode([
-                        'error'   => false,
-                        'mensaje' => 'Registro actualizado correctamente',
-                    ])
-                );
+                $salida = [
+                    'error'   => false,
+                    'mensaje' => 'Registro actualizado correctamente',
+                ];
             } else {
-                $body->write(
-                    json_encode([
-                        'error'   => true,
-                        'mensaje' => 'No se ha encontrado el registro',
-                    ])
-                );
+                $salida = [
+                    'error'   => true,
+                    'mensaje' => 'No se ha encontrado el registro',
+                ];
             }
         } catch (\PDOException $e) {
             /* En caso de error enviamos el mensaje */
-            $body->write(
-                json_encode([
-                    'error'   => true,
-                    'mensaje' => $e->getMessage(),
-                ])
-            );
+            $salida = [
+                'error'   => true,
+                'mensaje' => $e->getMessage(),
+            ];
         }
+
+        /* Codificamos el resultado en JSON y lo enviamos a la salida */
+        $body->write(json_encode($salida));
 
         return $respuesta;
     }
