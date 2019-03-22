@@ -1,6 +1,71 @@
 /* global angular:false, $:false */
 /* eslint-env browser */
 
+/*************** NOMBRES Y APELLIDOS ***************/
+var generadorNombres = (function() {
+  var nombres = {
+    total: [],
+    informacion: 0
+  }, apellidos = {
+    total: [],
+    informacion: 0
+  }, exterior = {};
+  /* TODO: Por rendimiento debería ordenarse de mayor a menor frecuencia */
+  $.get("datos/nombres.txt")
+    .done(function(datos) {
+      nombres = tratar(datos);
+    });
+  /* Ordenado de mayor a menor frecuencia */
+  $.get("datos/apellidos.txt")
+    .done(function(datos) {
+      apellidos = tratar(datos);
+    });
+  function tratar(datos) {
+    var informacion = [], acumulado = 0;
+    datos = datos.split("\n");
+    for (let dato of datos) {
+      var elemento = dato.split("\t");
+      var numero = parseInt(elemento[1], 10);
+      acumulado += numero;
+      informacion.push({
+        texto: convertirNombre(elemento[0]),
+        numero,
+        acumulado,
+      });
+    }
+    return {
+      total: acumulado,
+      informacion: informacion
+    };
+  }
+  exterior.obtenerNombre = function() {
+    if (nombres.total > 0) {
+      var umbral =  Math.floor(Math.random() * nombres.total);
+      var elegido = buscar(nombres.informacion, umbral);
+      return elegido;
+    } else {
+      return "?";
+    }
+  };
+  exterior.obtenerApellido = function() {
+    if (apellidos.total > 0) {
+      var umbral =  Math.floor(Math.random() * apellidos.total);
+      var elegido = buscar(apellidos.informacion, umbral);
+      return elegido;
+    } else {
+      return "?";
+    }
+  };
+  function buscar(datos, umbral) {
+    for (let dato of datos) {
+      if (umbral < dato.acumulado) {
+        return dato.texto;
+      }
+    }
+  }
+  return exterior;
+}());
+
 /********** CONTROLADORES **********/
 
 /* Controlador para el listado de usuarios */
@@ -152,71 +217,6 @@ var Popup = (function() {
 Popup.configurar({
   "selector": "#alertas"
 });
-
-/*************** NOMBRES Y APELLIDOS ***************/
-var generadorNombres = (function() {
-  var nombres = {
-    total: [],
-    informacion: 0
-  }, apellidos = {
-    total: [],
-    informacion: 0
-  }, exterior = {};
-  /* TODO: Por rendimiento debería ordenarse de mayor a menor frecuencia */
-  $.get("datos/nombres.txt")
-    .done(function(datos) {
-      nombres = tratar(datos);
-    });
-  /* Ordenado de mayor a menor frecuencia */
-  $.get("datos/apellidos.txt")
-    .done(function(datos) {
-      apellidos = tratar(datos);
-    });
-  function tratar(datos) {
-    var informacion = [], acumulado = 0;
-    datos = datos.split("\n");
-    for (var dato in datos) {
-      var elemento = datos[dato].split("\t");
-      var numero = parseInt(elemento[1], 10);
-      acumulado += numero;
-      informacion.push({
-        texto: convertirNombre(elemento[0]),
-        numero: numero,
-        acumulado: acumulado
-      });
-    }
-    return {
-      total: acumulado,
-      informacion: informacion
-    };
-  }
-  exterior.obtenerNombre = function() {
-    if (nombres.total > 0) {
-      var umbral =  Math.floor(Math.random() * nombres.total);
-      var elegido = buscar(nombres.informacion, umbral);
-      return elegido;
-    } else {
-      return "?";
-    }
-  };
-  exterior.obtenerApellido = function() {
-    if (apellidos.total > 0) {
-      var umbral =  Math.floor(Math.random() * apellidos.total);
-      var elegido = buscar(apellidos.informacion, umbral);
-      return elegido;
-    } else {
-      return "?";
-    }
-  };
-  function buscar(datos, umbral) {
-    for (var dato in datos) {
-      if (umbral < datos[dato].acumulado) {
-        return datos[dato].texto;
-      }
-    }
-  }
-  return exterior;
-}());
 
 /* Creamos las rutas de nuestra aplicación y sus controladores */
 angular.module("SlimCrudApp", ["ngRoute"]).
