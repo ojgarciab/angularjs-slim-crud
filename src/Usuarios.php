@@ -45,6 +45,7 @@ class Usuarios
 
         /* Codificamos el resultado en JSON y lo enviamos a la salida */
         $body->write(json_encode($salida));
+
         return $respuesta;
     }
 
@@ -76,6 +77,7 @@ class Usuarios
 
         /* Codificamos el resultado en JSON y lo enviamos a la salida */
         $body->write(json_encode($salida));
+
         return $respuesta;
     }
 
@@ -110,6 +112,7 @@ class Usuarios
 
         /* Codificamos el resultado en JSON y lo enviamos a la salida */
         $body->write(json_encode($salida));
+
         return $respuesta;
     }
 
@@ -155,6 +158,7 @@ class Usuarios
 
         /* Codificamos el resultado en JSON y lo enviamos a la salida */
         $body->write(json_encode($salida));
+
         return $respuesta;
     }
 
