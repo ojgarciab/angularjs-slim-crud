@@ -1,3 +1,5 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ojgarciab/angularjs-slim-crud) 
+
 # angularjs-slim-crud
 
 [![Build Status](https://travis-ci.org/ojgarciab/angularjs-slim-crud.svg?branch=master)](https://travis-ci.org/ojgarciab/angularjs-slim-crud)
