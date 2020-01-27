@@ -1,1 +1,17 @@
-{}
+ports:
+- port: 8001
+  onOpen: open-preview
+tasks:
+- name: Terminal
+  command: >
+    clear;
+    echo "";
+    echo "Cosas que puedes hacer en este terminal:";
+    echo " * apachectl stop";
+    echo " * apachectl start";
+    echo " * gp open /var/log/apache2/access.log";
+    echo " * gp open /var/log/apache2/error.log";
+- name: Apache
+  command: >
+    apachectl start &&
+    multitail /var/log/apache2/access.log -I /var/log/apache2/error.log
