@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nombre varchar(40) NOT NULL,
   apellidos varchar(40) NOT NULL,
   PRIMARY KEY (id),
-  UNIQUE KEY usuario (usuario)
+  UNIQUE (usuario)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
