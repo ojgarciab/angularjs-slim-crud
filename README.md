@@ -1,6 +1,6 @@
 # angularjs-slim-crud
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ojgarciab/angularjs-slim-crud)
-[![Build Status](https://travis-ci.org/ojgarciab/angularjs-slim-crud.svg?branch=master)](https://travis-ci.org/ojgarciab/angularjs-slim-crud)
+[![Build Status](https://travis-ci.com/ojgarciab/angularjs-slim-crud.svg?branch=master)](https://travis-ci.com/ojgarciab/angularjs-slim-crud)
 [![StyleCI](https://github.styleci.io/repos/52858877/shield?branch=master)](https://github.styleci.io/repos/52858877)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1af206b55fc4433a2032222ca1da616)](https://www.codacy.com/app/ojgarciab/angularjs-slim-crud)
 
