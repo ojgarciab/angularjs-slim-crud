@@ -3,13 +3,6 @@ ports:
   onOpen: open-preview
 tasks:
 - name: Terminal
-  init: >
-    composer install;
-    mkdir datos;
-    sed -i 's/AUTO_INCREMENT//; s/ENGINE=InnoDB DEFAULT CHARSET=utf8//' sql.esquema.txt
-    sqlite3 datos/basededatos.sqlite < sql.esquema.txt
-    sqlite3 datos/basededatos.sqlite < sql.datos.txt
-    echo '<?php self::$configuracion['dsn'] = "sqlite:'$(realpath datos/basededatos.sqlite)'";' > src/configuracion.php
   command: >
     clear;
     echo "";
@@ -19,6 +12,13 @@ tasks:
     echo " * gp open /var/log/apache2/access.log";
     echo " * gp open /var/log/apache2/error.log";
 - name: Apache
+  init: >
+    composer install;
+    mkdir datos;
+    sed -i 's/AUTO_INCREMENT//; s/ENGINE=InnoDB DEFAULT CHARSET=utf8//' sql.esquema.txt;
+    sqlite3 datos/basededatos.sqlite < sql.esquema.txt;
+    sqlite3 datos/basededatos.sqlite < sql.datos.txt;
+    echo '<?php self::$configuracion['dsn'] = "sqlite:'$(realpath datos/basededatos.sqlite)'";' > src/configuracion.php;
   command: >
     apachectl start &&
     multitail /var/log/apache2/access.log -I /var/log/apache2/error.log
